@@ -1,10 +1,11 @@
-import Tiptap from 'modules/TipTap';
-import React from 'react'
+import Tiptap from 'modules/tiptap/Tiptap';
+import React, { useState } from 'react'
 
 function CreateNewNote() {
+  const [description, setDescription] = useState();
   return (
     <div>
-      <Tiptap />
+      <Tiptap setDescription={setDescription} />
     </div>
   )
 }

@@ -1,7 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
 import { BrowserRouter } from 'react-router-dom';
 import Routing from 'Routing';
+import "./App.css";
 
 function App() {
   return (
