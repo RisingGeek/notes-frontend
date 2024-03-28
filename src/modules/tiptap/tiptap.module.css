@@ -1,5 +1,4 @@
 .text_editor {
-  max-width: 100%;
   margin: 1rem;
   border-radius: 5px;
   border: 1px solid grey;
@@ -28,8 +27,7 @@
 
 @media (min-width: 768px) {
   .text_editor {
-    max-width: 80%;
-    margin: 5rem auto;
+    margin: 2rem 0;
   }
 
   .menu_bar {

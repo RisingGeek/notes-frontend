@@ -1,0 +1,6 @@
+.create_note_container {
+  @media (min-width: 768px) {
+    width: 80%;
+    margin: 5rem auto;
+  }
+}
