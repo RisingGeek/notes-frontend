@@ -1,4 +1,4 @@
-import { Button, Card, Flex, message } from "antd";
+import { Button, Card, Flex, Skeleton, message } from "antd";
 import { deleteNoteById, getAllNotesApi } from "apis/notes.api";
 import { INote } from "interfaces/notes.type";
 import { useEffect, useState } from "react";
@@ -10,21 +10,36 @@ import styles from "./home.module.css";
 function GetAllNotes() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Get all notes by id
   useEffect(() => {
     (async function () {
-      const { data } = await getAllNotesApi();
-      setNotes(data);
-
+      try {
+        const { data } = await getAllNotesApi();
+        setNotes(data);
+        setErrorMessage("");
+      } catch (error: any) {
+        setErrorMessage(error.message);
+      }
     })();
   }, []);
 
+  useEffect(() => {
+    if (errorMessage) {
+      messageApi.error(errorMessage);
+    }
+  }, [errorMessage]);
+
   const handleDeleteNote = async (id: string) => {
     await deleteNoteById(id);
-    messageApi.success("Note Deleted Successfully!", 5);
+    message.success("Note Deleted Successfully!", 5);
     const updatedNotes = notes.filter((el) => el._id !== id);
     setNotes(updatedNotes);
+  }
+
+  if (!errorMessage && !notes.length) {
+    return <Skeleton />
   }
 
   return (
@@ -41,7 +56,7 @@ function GetAllNotes() {
       <Flex gap="large" wrap="wrap" justify="center">
         {
           notes.map((el) => (
-            <Card title={el.title} className={styles.note_card}>
+            <Card title={el.title} className={styles.note_card} key={el._id}>
               <div dangerouslySetInnerHTML={{ __html: el.note }}></div>
               <Flex align="center">
                 <Button type="text">
