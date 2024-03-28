@@ -1,6 +1,7 @@
 import { Button, Card, Flex, Skeleton, message } from "antd";
 import { deleteNoteById, getAllNotesApi } from "apis/notes.api";
 import { INote } from "interfaces/notes.type";
+import DeleteNoteModal from "modules/DeleteNoteModal";
 import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
@@ -11,6 +12,7 @@ function GetAllNotes() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
   const [errorMessage, setErrorMessage] = useState("");
+  const [noteId, setNoteId] = useState("");
 
   // Get all notes by id
   useEffect(() => {
@@ -31,11 +33,20 @@ function GetAllNotes() {
     }
   }, [errorMessage]);
 
+  const handleOpenDeleteConfirmModal = (id: string) => {
+    setNoteId(id);
+  }
+
   const handleDeleteNote = async (id: string) => {
     await deleteNoteById(id);
+    setNoteId("");
     message.success("Note Deleted Successfully!", 5);
     const updatedNotes = notes.filter((el) => el._id !== id);
     setNotes(updatedNotes);
+  }
+
+  const handleHideModal = () => {
+    setNoteId("");
   }
 
   if (!errorMessage && !notes.length) {
@@ -46,6 +57,11 @@ function GetAllNotes() {
     <div className={styles.home_container}>
       {contextHolder}
       <h1 className={styles.heading}>View All Your Notes Here</h1>
+      <DeleteNoteModal
+        noteId={noteId}
+        handleDeleteNote={handleDeleteNote}
+        handleHideModal={handleHideModal}
+      />
       <Flex>
         <Button type="primary" className={styles.new_note_btn}>
           <Link to="/create-note">
@@ -64,7 +80,7 @@ function GetAllNotes() {
                     <CiEdit color="#005cc5" size="1.5rem" />
                   </Link>
                 </Button>
-                <Button type="text" onClick={() => handleDeleteNote(el._id)}>
+                <Button type="text" onClick={() => handleOpenDeleteConfirmModal(el._id)}>
                   <MdDelete color="#cb3837" size="1.5rem" />
                 </Button>
               </Flex>
