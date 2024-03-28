@@ -27,7 +27,7 @@ function GetAllNotes() {
   }
 
   return (
-    <div>
+    <div className={styles.home_container}>
       {contextHolder}
       <h1 className={styles.heading}>View All Your Notes Here</h1>
       <Flex>

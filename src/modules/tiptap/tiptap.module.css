@@ -1,13 +1,14 @@
 .text_editor {
   margin: 1rem;
-  border-radius: 5px;
-  border: 1px solid grey;
+  border: 1px solid #000000;
+  box-shadow: 5px 5px 10px #000000;
 }
 
 .menu_bar {
   padding-bottom: 5px;
   display: flex;
   justify-content: space-between;
+  background-color: #ffffff;
 }
 
 .menu_bar button {
