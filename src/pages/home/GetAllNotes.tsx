@@ -11,6 +11,7 @@ function GetAllNotes() {
   const [notes, setNotes] = useState<INote[]>([]);
   const [messageApi, contextHolder] = message.useMessage();
 
+  // Get all notes by id
   useEffect(() => {
     (async function () {
       const { data } = await getAllNotesApi();

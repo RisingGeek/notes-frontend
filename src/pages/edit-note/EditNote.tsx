@@ -9,6 +9,7 @@ function EditNote() {
   const { id } = useParams();
   const [note, setNote] = useState<INote>();
 
+  // Get the note by id
   useEffect(() => {
     (async function () {
       if (!id) {

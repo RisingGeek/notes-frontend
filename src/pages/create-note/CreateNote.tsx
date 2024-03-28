@@ -10,6 +10,7 @@ interface ICreateNoteProps {
   defaultNote?: INote;
 }
 
+// Creates/Updates a note
 function CreateNote(props: ICreateNoteProps) {
   const { defaultNote } = props;
   const [title, setTitle] = useState(defaultNote?.title || "");
@@ -17,11 +18,14 @@ function CreateNote(props: ICreateNoteProps) {
   const [messageApi, contextHolder] = message.useMessage();
 
   const handleSubmit = async () => {
+    // If defaultNote is present, update the note
     if (defaultNote) {
       await updateNoteById({ _id: defaultNote._id, title, note: description });
       messageApi.success("Note Updated Successfully!", 5);
       return;
     }
+
+    // Create a new note
     await createNewNoteApi(title, description);
     messageApi.success("Note Created Successfully!", 5);
   }
