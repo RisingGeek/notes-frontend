@@ -6,7 +6,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-console.log("base", process.env.REACT_APP_SERVER_URL)
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

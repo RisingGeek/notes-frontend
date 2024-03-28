@@ -18,13 +18,11 @@ const Tiptap = (props: ITiptapProps) => {
 
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      console.log("html", html)
       setDescription(html);
     },
   });
 
   useEffect(() => {
-    console.log("cont", defaultContent)
     if (defaultContent) {
       editor?.commands.setContent(defaultContent);
     }
