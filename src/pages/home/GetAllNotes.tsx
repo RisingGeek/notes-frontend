@@ -1,5 +1,5 @@
-import { Button, Card, Flex } from "antd";
-import { getAllNotesApi } from "apis/notes.api";
+import { Button, Card, Flex, message } from "antd";
+import { deleteNoteById, getAllNotesApi } from "apis/notes.api";
 import { INote } from "interfaces/notes.type";
 import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
@@ -9,6 +9,7 @@ import styles from "./home.module.css";
 
 function GetAllNotes() {
   const [notes, setNotes] = useState<INote[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     (async function () {
@@ -18,9 +19,24 @@ function GetAllNotes() {
     })();
   }, []);
 
+  const handleDeleteNote = async (id: string) => {
+    await deleteNoteById(id);
+    messageApi.success("Note Deleted Successfully!", 5);
+    const updatedNotes = notes.filter((el) => el._id !== id);
+    setNotes(updatedNotes);
+  }
+
   return (
     <div>
+      {contextHolder}
       <h1 className={styles.heading}>View All Your Notes Here</h1>
+      <Flex>
+        <Button type="primary" className={styles.new_note_btn}>
+          <Link to="/create-note">
+            Create a New Note
+          </Link>
+        </Button>
+      </Flex>
       <Flex gap="large" wrap="wrap" justify="center">
         {
           notes.map((el) => (
@@ -32,7 +48,7 @@ function GetAllNotes() {
                     <CiEdit color="#005cc5" size="1.5rem" />
                   </Link>
                 </Button>
-                <Button type="text">
+                <Button type="text" onClick={() => handleDeleteNote(el._id)}>
                   <MdDelete color="#cb3837" size="1.5rem" />
                 </Button>
               </Flex>

@@ -5,3 +5,7 @@
 .note_card {
   width: 25%;
 }
+
+.new_note_btn {
+  margin: 1.5rem auto;
+}

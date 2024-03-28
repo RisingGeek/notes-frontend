@@ -6,5 +6,17 @@ export function createNewNoteApi(title: string, note: string) {
 }
 
 export function getAllNotesApi() {
-  return axios.get<INote[]>("/notes")
+  return axios.get<INote[]>("/notes");
+}
+
+export function getNoteById(id: string) {
+  return axios.get<INote>(`/notes/${id}`);
+}
+
+export function updateNoteById(note: INote) {
+  return axios.put<INote>(`/notes/${note._id}`, { note });
+}
+
+export function deleteNoteById(id: string) {
+  return axios.delete<INote>(`/notes/${id}`);
 }
